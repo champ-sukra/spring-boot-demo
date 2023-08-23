@@ -1,6 +1,7 @@
 package com.sample.demo.controllers;
 
 import com.sample.demo.controllers.request.TaskRequest;
+import com.sample.demo.exceptions.DataNotFoundException;
 import com.sample.demo.models.Role;
 import com.sample.demo.repositories.entities.Task;
 import com.sample.demo.services.TaskService;
@@ -37,7 +38,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/{id}")
-    public Response<Object> getTasks(@PathVariable("id") String id) {
+    public Response<Object> getTasks(@PathVariable("id") String id) throws DataNotFoundException {
         Task task = taskService.getTaskById(id);
         return CreateSuccessResponse(task);
     }

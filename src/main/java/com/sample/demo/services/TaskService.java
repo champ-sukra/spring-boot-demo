@@ -1,6 +1,7 @@
 package com.sample.demo.services;
 
 import com.sample.demo.controllers.request.TaskRequest;
+import com.sample.demo.exceptions.DataNotFoundException;
 import com.sample.demo.repositories.TaskRepository;
 import com.sample.demo.repositories.entities.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class TaskService {
     }
 
     @Cacheable(cacheNames = {"task"}, key = "#taskId", sync = true)
-    public Task getTaskById(String taskId) {
-        return taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("Task Id is not found: " + taskId));
+    public Task getTaskById(String taskId) throws DataNotFoundException {
+        return taskRepository.findById(taskId).orElseThrow(() ->
+                new DataNotFoundException("not_found")
+        );
     }
 }
