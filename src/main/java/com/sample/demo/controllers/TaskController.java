@@ -19,6 +19,11 @@ public class TaskController {
     @Autowired
     UserService userService;
 
+    public TaskController(TaskService taskService, UserService userService) {
+        this.taskService = taskService;
+        this.userService = userService;
+    }
+
     @PostMapping("/tasks")
     public Response<Object> createTask(@RequestBody TaskRequest taskRequest) {
         Task task = taskService.createTask(taskRequest);
@@ -37,9 +42,9 @@ public class TaskController {
         return CreateSuccessResponse(task);
     }
 
-    @GetMapping("/users")
-    public Response<Object> getUsers() {
-        List<Role> roles = userService.getProfiles();
+    @GetMapping("/roles")
+    public Response<Object> getRoles() {
+        List<Role> roles = userService.getRoles();
         return CreateSuccessResponse(roles);
     }
 

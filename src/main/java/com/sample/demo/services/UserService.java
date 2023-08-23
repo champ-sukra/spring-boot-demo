@@ -18,10 +18,9 @@ public class UserService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<Role> getProfiles() {
+    public List<Role> getRoles() {
         String url = "http://localhost:8082/auth/management/v1/roles";
 
-//        HttpEntity<String> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<Response<List<Role>>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,

@@ -15,6 +15,10 @@ public class TaskService {
     @Autowired
     TaskRepository taskRepository;
 
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     public Task createTask(TaskRequest taskRequest) {
         Task task = new Task();
         task.setTitle(taskRequest.getTitle());
