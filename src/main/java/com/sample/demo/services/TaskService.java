@@ -6,6 +6,11 @@ import com.sample.demo.repositories.TaskRepository;
 import com.sample.demo.repositories.entities.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +33,9 @@ public class TaskService {
     }
 
     public List<Task> getTasks() {
-        return taskRepository.findAll();
+        Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Direction.DESC, "id"));
+        Page<Task> page = taskRepository.findAll(pageable);
+        return page.toList();
     }
 
     @Cacheable(cacheNames = {"task"}, key = "#taskId", sync = true)
